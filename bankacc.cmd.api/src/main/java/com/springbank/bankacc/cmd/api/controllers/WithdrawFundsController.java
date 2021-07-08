@@ -14,39 +14,42 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springbank.bankacc.cmd.api.commands.DepositFundsCommand;
+import com.springbank.bankacc.cmd.api.commands.WithdrawFundsCommand;
 import com.springbank.bankacc.cmd.api.dtos.OpenAccountResponse;
 import com.springbank.bankacc.core.dto.BaseResponse;
 
 @RestController
-@RequestMapping(path = "/api/v1/depositFunds")
-public class DepositFundsController {
+@RequestMapping("/api/v1/withdrawFunds")
+public class WithdrawFundsController {
+	
 	private final CommandGateway commandGateway;
 
 	@Autowired
-	public DepositFundsController(CommandGateway commandGateway) {
+	public WithdrawFundsController(CommandGateway commandGateway) {
 		this.commandGateway = commandGateway;
 	}
 
 	@PutMapping("/{accountid}")
 	@PreAuthorize("hasAuthority('WRITE_PRIVILEGE')")
-	public ResponseEntity<BaseResponse> depositFunds(@PathVariable("accountid") String accountId,
-			@Valid @RequestBody DepositFundsCommand command){
+	public ResponseEntity<BaseResponse> withdraw(@PathVariable("accountid") String accountId,
+			@Valid @RequestBody WithdrawFundsCommand command){
 		
 		try {
 			command.setId(accountId);
 			commandGateway.send(command);
 			return new ResponseEntity<BaseResponse>(
-					new BaseResponse(accountId+" has been successfully deposited")
+					new BaseResponse(accountId+" has been successfully withdrawn")
 					, HttpStatus.OK);
 			
 		}catch(Exception e) {
-			String safeMessage = "error depositing funds to bank account";
-			System.out.print("ERROR!!!!! withdrawing from bank account  "+accountId+"  "+e.toString());
+			String safeMessage = "error withdrawning funds to bank account";
+			System.out.print("ERROR!!!!! withdrawn from bank account  "+accountId+"  "+e.toString());
 			return new ResponseEntity<BaseResponse>(
 					new OpenAccountResponse(null, safeMessage),
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 	}
+
 
 }
