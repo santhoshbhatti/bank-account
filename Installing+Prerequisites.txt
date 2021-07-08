@@ -63,6 +63,9 @@ docker network create --attachable -d overlay springbankNet
 #7. Axon Platform
 
 Run in Docker:
+
+docker run -d --name axon-server -p 8024:8024 -p 8124:8124 --network springbanknet --restart always axoniq/axonserver:latest
+
 docker run -d --name axon-server \
 -p 8024:8024 -p 8124:8124 \
 --network springbankNet \
@@ -74,6 +77,9 @@ http://localhost:8024/
 #8. MongoDB
 
 Run in Docker:
+
+docker run -it -d --name mongo-container -p 27017:27017 --network springbanknet --restart always -v mongodb_data_container:/data/db mongo:latest
+
 docker run -it -d --name mongo-container \
 -p 27017:27017 --network springbankNet \
 --restart always \
@@ -85,6 +91,7 @@ https://robomongo.org/download
 
 #9. MySQL
 
+docker run -it -d --name mysql-container -p 3306:3306 --network springbanknet -e MYSQL_ROOT_PASSWORD=root --restart always -v mysql_data_container:/var/lib/mysql mysql:latest
 Run in Docker:
 docker run -it -d --name mysql-container \
 -p 3306:3306 --network springbankNet \
@@ -94,6 +101,9 @@ docker run -it -d --name mysql-container \
 mysql:latest
 
 Client tools in Docker – Adminer:
+
+docker run -it -d --name adminer -p 8060:8080 --network springbanknet -e ADMINER_DEFAULT_SERVER=mysql-container --restart always adminer:latest
+
 docker run -it -d --name adminer \
 -p 8080:8080 --network springbankNet \
  -e ADMINER_DEFAULT_SERVER=mysql-container \

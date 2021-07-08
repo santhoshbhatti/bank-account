@@ -12,8 +12,8 @@ import com.springbank.bankacc.core.configuration.AxonConfig;
 @SpringBootApplication
 @EnableResourceServer
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@Import(AxonConfig.class)
 @EntityScan(basePackages = "com.springbank.bankacc.core.models")
+@Import(AxonConfig.class)
 public class BankAccQueryApplication {
 
 	public static void main(String[] args) {
