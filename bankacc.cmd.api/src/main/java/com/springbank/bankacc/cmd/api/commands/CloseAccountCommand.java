@@ -4,8 +4,9 @@ import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 @Data
-@Builder
+@NoArgsConstructor
 public class CloseAccountCommand {
 	
 	@TargetAggregateIdentifier

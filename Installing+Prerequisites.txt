@@ -109,5 +109,5 @@ docker run -it -d --name adminer \
  -e ADMINER_DEFAULT_SERVER=mysql-container \
 --restart always adminer:latest
 
-
+docker run -it -d --name mongo-container -p 27017:27017 --network springbanknet --restart always -v mongodb_data_container:/data/db mongo:latest
 
